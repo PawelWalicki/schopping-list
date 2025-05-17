@@ -1,0 +1,14 @@
+.container-home {
+    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-button {
+    display: flex;
+    width: 40vh;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-around;
+}

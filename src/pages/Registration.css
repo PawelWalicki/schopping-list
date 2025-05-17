@@ -1,0 +1,15 @@
+.title {
+    margin-top: 15%;
+    text-align: center;
+}
+
+.alert {
+    color: red;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.button {
+    height: 3vh;
+    width: 14vh;
+}
