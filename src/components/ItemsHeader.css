@@ -1,0 +1,14 @@
+.title-Item-Box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 10px;
+}
+
+.title-Item {
+    margin-right: 1vw;
+}
+
+.button-Item {
+    height: 5vh;
+}

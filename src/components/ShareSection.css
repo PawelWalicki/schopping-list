@@ -1,0 +1,6 @@
+.share-Box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px 0 0 15px
+}
