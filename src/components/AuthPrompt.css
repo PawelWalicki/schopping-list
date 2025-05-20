@@ -12,3 +12,8 @@
     flex-direction: row;
     justify-content: space-around;
 }
+
+.button {
+    height: 3vh;
+    width: 14vh;
+}

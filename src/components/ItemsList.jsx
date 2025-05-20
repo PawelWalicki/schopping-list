@@ -1,9 +1,8 @@
 import { AddItem } from "./AddItem"
-import './ItemsList.css'
 import { ItemsHeader } from "./ItemsHeader";
 import { ItemsListItems } from "./ItemsListItems";
 import { ShareSection } from "./ShareSection";
-import { useState } from "react";
+import './ItemsList.css';
 
 export const ItemsList = ({ list }) => {
 

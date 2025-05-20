@@ -1,6 +1,13 @@
-.share-Box {
+.share {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    margin: 15px 0 0 15px
+    margin: 15px 15px 0 15px;
+}
+
+.share-Box {
+    width: 42vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
