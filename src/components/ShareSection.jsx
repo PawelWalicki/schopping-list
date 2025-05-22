@@ -11,7 +11,14 @@ import './ShareSection.css'
 export const ShareSection = ({ list }) => {
 
     const [shareWithInput, setShareWithInput] = useState('')
-    
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            shareListWithUser(list.id, shareWithInput)
+            setShareWithInput("")
+        }
+    }
+
     return (
         <div className="share">
             <div className='share-Box'>
@@ -19,6 +26,7 @@ export const ShareSection = ({ list }) => {
                     label="email"
                     value={shareWithInput}
                     onChange={(e) => setShareWithInput(e.target.value)}
+                    onKeyDown={(e) => handleKeyPress(e)}
                     sx={{
                         "& .MuiOutlinedInput-root": {
                             color: "#417f9e",
@@ -38,18 +46,21 @@ export const ShareSection = ({ list }) => {
                         color: "#ffffff",
                     }}>SHARE!</Button>
             </div>
-            <div>
-                <Accordion sx={{ backgroundColor: '#f5f5f5', marginLeft: '25px' }}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        Shared with:
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        {list.sharedWith && Object.entries(list.sharedWith).map(([userId, user]) => (
-                            <SharedUserRow userId={userId} listId={list.id} user={user} />
-                        ))}
-                    </AccordionDetails>
-                </Accordion>
-            </div>
+            {list.sharedWith && (
+                <div>
+                    <Accordion sx={{ backgroundColor: '#f5f5f5', marginLeft: '25px' }}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            Shared with:
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            {list.sharedWith && Object.entries(list.sharedWith).map(([userId, user]) => (
+                                <SharedUserRow userId={userId} listId={list.id} user={user} />
+                            ))}
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
+            )}
         </div>
+
     )
 } 

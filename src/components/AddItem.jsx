@@ -12,12 +12,19 @@ export const AddItem = ({ listId }) => {
         setquantity(1)
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleAddItem()
+        }
+    }
+
     return (
         <Grid container spacing={2} size="grow" display="flex" justifyContent="center" alignItems="center" marginTop={"7px"}>
             <TextField
                 value={value}
                 label="product"
                 onChange={(e) => setValue(e.target.value)}
+                onKeyDown={(e) => handleKeyPress(e)}
                 sx={{
                     "& .MuiOutlinedInput-root": {
                         color: "#417f9e",
@@ -36,6 +43,7 @@ export const AddItem = ({ listId }) => {
                 label="quantity"
                 type="number"
                 onChange={(e) => setquantity(e.target.value)}
+                onKeyDown={(e) => handleKeyPress(e)}
                 sx={{
                     "& .MuiOutlinedInput-root": {
                         color: "#417f9e",

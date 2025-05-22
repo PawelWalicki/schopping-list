@@ -23,6 +23,12 @@ export const LoginForm = () => {
         }
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            loginWithUsernameAndPassword(e)
+        }
+    }
+
     return (
         <Container>
             <h1 className='title'>Sign in</h1>
@@ -65,6 +71,7 @@ export const LoginForm = () => {
                         placeholder="Password"
                         value={password} onChange={(e) => setPassword(e.target.value)}
                         fullWidth
+                        onKeyDown={(e) => handleKeyPress(e)}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 color: "#417f9e",

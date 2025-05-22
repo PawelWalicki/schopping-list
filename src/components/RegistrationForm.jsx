@@ -3,46 +3,53 @@ import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Button, Container, Grid, TextField } from '@mui/material';
 import './RegistrationForm.css'
+import { useNavigate } from 'react-router-dom';
 
 export const RegistrationForm = () => {
-        const [email, setEmail] = useState('');
-        const [password, setPassword] = useState('');
-        const [confirmPassword, setConfirmPassword] = useState('');
-        const [passwordError, setPasswordError] = useState('');
-        const [notice, setNotice] = useState("");
-    
-    
-        const validatePassword = () => {
-            let isValid = true;
-            if (password !== confirmPassword) {
-                isValid = false
-                setPasswordError("Passowords are not the same")
-            } else {
-                setPasswordError('')
-            }
-            return isValid
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [notice, setNotice] = useState("");
+
+
+    const validatePassword = () => {
+        let isValid = true;
+        if (password !== confirmPassword) {
+            isValid = false
+            setPasswordError("Passowords are not the same")
+        } else {
+            setPasswordError('')
         }
-    
-        const onSubmit = async (e) => {
-            e.preventDefault()
-            setNotice("")
-            setPasswordError("")
-            if (validatePassword()) {
-    
-                await createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredentials) => {
-                        const user = userCredentials.user
-                        console.log(user)
-                    })
-                    .catch(e => {
-                        setNotice("Requirements for email or password are not met!")
-                    })
-            } else {
-                setNotice("Passords does not match")
-            }
-    
+        return isValid
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        setNotice("")
+        setPasswordError("")
+        if (validatePassword()) {
+
+            await createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredentials) => {
+                    const user = userCredentials.user
+                   navigate("/")
+                })
+                .catch(e => {
+                    setNotice("Requirements for email or password are not met!")
+                })
+        } else {
+            setNotice("Passords does not match")
         }
-    
+
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            onSubmit(e)
+        }
+    }
 
     return (
         <Container>
@@ -109,6 +116,7 @@ export const RegistrationForm = () => {
                         fullWidth
                         error={passwordError !== ""}
                         helperText={passwordError}
+                        onKeyDown={(e) => handleKeyPress(e)}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 color: "#417f9e",
