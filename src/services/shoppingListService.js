@@ -1,5 +1,6 @@
 import { ref, push, set, onValue, update, remove } from "firebase/database";
-import { auth, db } from "../firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
+import { analytics, auth, db } from "../firebase";
 
 export const getUserLists = (setList) => {
     const user = auth.currentUser
@@ -8,6 +9,7 @@ export const getUserLists = (setList) => {
         return
     }
     const dbRef = ref(db, "lists");
+    logEvent(analytics, "User got the lists", {param1: 'wartosc'})
     onValue(dbRef, (snapshot) => {
         const data = snapshot.val()
         if (data) {
