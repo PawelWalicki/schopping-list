@@ -1,7 +1,7 @@
 import { Button, Container, TextField, Grid } from "@mui/material";
 import { useState } from "react"
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import './LoginForm.css'
 import { RegisterLink } from "./RegisterLink";
@@ -16,7 +16,13 @@ export const LoginForm = () => {
         e.preventDefault();
 
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            const userCredits = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredits.user
+            if(!user.emailVerified){
+                await signOut(auth)
+                setNotice("You have to verify your email first!")
+                return
+            }
             navigate("/");
         } catch {
             setNotice("You entered a wrong username or password.")

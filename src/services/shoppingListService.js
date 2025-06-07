@@ -17,8 +17,8 @@ export const getUserLists = (setList) => {
 
             Object.entries(data).forEach(([id, list]) => {
                 const isOwner = list.owner === user.email;
-                const isShared = list.sharedWith && Object.entries(list.sharedWith).some(([_, sharedUser]) => {
-                    if(sharedUser.email === user.email) {
+                const isShared = list.sharedWith && Object.entries(list.sharedWith).some(([email, isShared]) => {
+                    if(email.replace(",", ".") === user.email && isShared) {
                         return true
                     }
                 })
@@ -41,6 +41,7 @@ export const createShoppingList = async (userEmail, name) => {
         name: name,
         items: {}
     };
+    console.log(userEmail)
 
     const newListRef = await push(listsRef, newList);
     return newListRef.key;
@@ -101,25 +102,20 @@ export const shareListWithUser = async (listId, userEmail) => {
         console.log("User not logged in!")
     }
 
-    const sharedWithRef = push(ref(db, `lists/${listId}/sharedWith`))
-    await set(sharedWithRef, {
-        email: userEmail
-    });
+    const safeEmail = userEmail.replace(/\./g, ',');
+    const sharedWithRef = ref(db, `lists/${listId}/sharedWith/${safeEmail}`);
+    await set(sharedWithRef, true);
 
 }
 
-export const unshareListWithUser = async (listId, userId) => {
+export const unshareListWithUser = async (listId, userEmail) => {
     const user = auth.currentUser
     if(!user){
         console.log("User not logged in!")
         return
     }
 
-    const userRef = ref(db, `lists/${listId}/sharedWith/${userId}`)
-    try {
-        await remove(userRef) 
-        console.log(`User ${userId} unshred from list ${listId}`)
-    } catch (error) {
-        console.error("Failed to unshare user: ", error)
-    }
+    const safeEmail = userEmail.replace(/\./g, ',');
+    const userRef = ref(db, `lists/${listId}/sharedWith/${safeEmail}`);
+    await remove(userRef);
 }

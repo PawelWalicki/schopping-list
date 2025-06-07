@@ -14,9 +14,13 @@ export const ShareSection = ({ list }) => {
 
     const handleKeyPress = (e) => {
         if (e.key === "Enter") {
-            shareListWithUser(list.id, shareWithInput)
-            setShareWithInput("")
+            shareList()
         }
+    }
+
+    const shareList = () => {
+        shareListWithUser(list.id, shareWithInput)
+        setShareWithInput("")
     }
 
     return (
@@ -40,7 +44,7 @@ export const ShareSection = ({ list }) => {
                         },
                     }} ></TextField>
                 < Button
-                    onClick={() => shareListWithUser(list.id, shareWithInput)}
+                    onClick={() => shareList()}
                     style={{
                         backgroundColor: "#f0a54a",
                         color: "#ffffff",
@@ -53,8 +57,8 @@ export const ShareSection = ({ list }) => {
                             Shared with:
                         </AccordionSummary>
                         <AccordionDetails>
-                            {list.sharedWith && Object.entries(list.sharedWith).map(([userId, user]) => (
-                                <SharedUserRow userId={userId} listId={list.id} user={user} />
+                            {list.sharedWith && Object.entries(list.sharedWith).map(([userEmail, _]) => (
+                                <SharedUserRow listId={list.id} userEmail={userEmail} />
                             ))}
                         </AccordionDetails>
                     </Accordion>

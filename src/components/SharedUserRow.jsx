@@ -1,10 +1,10 @@
 import { Button } from "@mui/material"
 import { unshareListWithUser } from "../services/shoppingListService"
 
-export const SharedUserRow = ({ user, userId, listId }) => {
+export const SharedUserRow = ({ userEmail, listId }) => {
     return (
         <div>
-            {user.email} <Button onClick={() => unshareListWithUser(listId, userId)}>Unshare</Button>
+            {userEmail} <Button onClick={() => unshareListWithUser(listId, userEmail)}>Unshare</Button>
         </div>
     )
 }

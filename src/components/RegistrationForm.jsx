@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from 'firebase/auth';
 import { Button, Container, Grid, TextField } from '@mui/material';
 import './RegistrationForm.css'
 import { useNavigate } from 'react-router-dom';
@@ -34,7 +34,12 @@ export const RegistrationForm = () => {
             await createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredentials) => {
                     const user = userCredentials.user
-                   navigate("/")
+                    sendEmailVerification(user).then(() => {
+                        console.log("Verification email sent!")
+                        signOut(auth)
+                        return
+                    })
+                   navigate("/login")
                 })
                 .catch(e => {
                     setNotice("Requirements for email or password are not met!")
