@@ -19,7 +19,7 @@ export const LoginForm = () => {
         try {
             const userCredits = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredits.user
-            if(!user.emailVerified){
+            if (!user.emailVerified) {
                 await signOut(auth)
                 setNotice("You have to verify your email first!")
                 return
@@ -51,7 +51,7 @@ export const LoginForm = () => {
         try {
             await sendPasswordResetEmail(auth, email)
             setNotice("Mail to reset password is sent!")
-        }catch(error) {
+        } catch (error) {
             setNotice("We cannot reset your password!")
         }
     }
@@ -114,20 +114,31 @@ export const LoginForm = () => {
                     />
                 </Grid>
                 <Grid display="flex" justifyContent="center" alignItems="center" size={7}>
-                    <Button type="submit" className="button" onClick={(e) => loginWithUsernameAndPassword(e)} style={{
-                        backgroundColor: "#f0a54a",
-                        color: "#ffffff",
-                    }}>Submit</Button>
+                    <Button
+                        variant="text"
+                        onClick={(e) => resetPassword(e)}
+                        style={{
+                            color: "#f0a54a",
+                        }}
+                    >
+                        Password reset !
+                    </Button>
                 </Grid>
-                <Button onClick={(e) => resetPassword(e)}>
-                    Password reset!
-                </Button>
+                <Grid display="flex" justifyContent="center" alignItems="center" size={7}>
+                    <Button
+                        type="submit"
+                        className="button"
+                        onClick={(e) => loginWithUsernameAndPassword(e)}
+                        style={{
+                            backgroundColor: "#f0a54a",
+                            color: "#ffffff",
+                        }}>Submit</Button>
+                </Grid>
                 <Grid display="flex" justifyContent="center" alignItems="center" size={7}>
                     <GoogleButton
                         onClick={loginWithGoogle}
                     />
                 </Grid>
-
             </Grid>
             <Grid display="flex" justifyContent="center" alignItems="center" size={7} paddingTop={"10px"}>
                 <RegisterLink />
